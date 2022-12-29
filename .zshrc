@@ -8,7 +8,7 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH=/usr/share/oh-my-zsh/
 
-
+export GPG_TTY=$(tty)
 # ZSH stuff
 plugins=(git rust) 
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
@@ -81,7 +81,6 @@ export PATH=/home/igor/.cargo/bin:$PATH
 
 
 
-source /usr/share/nvm/init-nvm.sh
 # -- START ACTIVESTATE DEFAULT RUNTIME ENVIRONMENT
 export PATH="/home/igor/.cache/activestate/bin:$PATH"
 # -- STOP ACTIVESTATE DEFAULT RUNTIME ENVIRONMENT
