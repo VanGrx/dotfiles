@@ -69,7 +69,21 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-
+  -- Tabs 
+  {'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  },
   'rust-lang/rust.vim',
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -86,7 +100,11 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',
+         tag = 'legacy',
+         event = "LspAttach",
+         opts = {},
+      },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -139,10 +157,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = 'ibl',
+    opts = {},
   },
 
   -- "gc" to comment visual regions/lines
@@ -266,6 +282,36 @@ require('telescope').setup {
   },
 }
 
+require("neo-tree").setup({
+        close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+        popup_border_style = "rounded",
+        enable_git_status = true,
+-- If you don't want to use these columns, you can set `enabled = false` for each of them individually
+          file_size = {
+            enabled = true,
+            required_width = 20, -- min width of window required to show this column
+          },
+          type = {
+            enabled = true,
+            required_width = 40, -- min width of window required to show this column
+          },
+          last_modified = {
+            enabled = true,
+            required_width = 88, -- min width of window required to show this column
+          },
+          created = {
+            enabled = true,
+            required_width = 110, -- min width of window required to show this column
+          },
+          symlink_target = {
+            enabled = false,
+          },
+          window = {
+            position = "left",
+            width = 60,}
+})
+
+
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
@@ -286,6 +332,8 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+
+vim.keymap.set('n', '<leader>t', '<Cmd>Neotree toggle<CR>', { desc = '[T]oggle NeoTree', silent = true })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
