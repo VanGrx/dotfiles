@@ -110,6 +110,8 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
+  -- LSP symbols
+  'onsails/lspkind.nvim',
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -509,6 +511,7 @@ mason_lspconfig.setup_handlers {
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
 
 luasnip.config.setup {}
 
@@ -517,6 +520,17 @@ cmp.setup {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
+  },
+  formatting = {
+    format = lspkind.cmp_format(),
+  },
+  window = {
+   completion = {
+    border = 'rounded'
+    },
+   documentation = {
+    border = 'rounded' 
+   },
   },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
