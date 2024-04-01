@@ -270,6 +270,8 @@ vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 
+vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { noremap = true, silent = true })
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
