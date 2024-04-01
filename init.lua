@@ -78,7 +78,7 @@ require('lazy').setup({
     init = function() vim.g.barbar_auto_setup = false end,
     opts = {
       -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-      -- animation = true,
+      animation = true,
       -- insert_at_start = true,
       -- …etc.
     },
@@ -112,6 +112,12 @@ require('lazy').setup({
   },
   -- LSP symbols
   'onsails/lspkind.nvim',
+
+  -- Debugger
+  { 
+    "rcarriga/nvim-dap-ui", 
+    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} 
+  },
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -241,6 +247,9 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
+-- Don't scroll to the end of screen
+vim.o.scrolloff = 10
+
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -292,6 +301,10 @@ require('telescope').setup {
     },
   },
 }
+
+
+require('dapui').setup()
+
 
 require("neo-tree").setup({
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
