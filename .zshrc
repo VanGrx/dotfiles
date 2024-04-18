@@ -117,6 +117,7 @@ function _comp-kdesrc-run
   return 0
 }
 
+eval "$(fzf --zsh | sed 's/fc -rl/fc -rlt %Y-%m-%d-%H:%M:%S/')"
 ## Register autocomplete function
 complete -o nospace -F _comp-kdesrc-run kdesrc-run
 
