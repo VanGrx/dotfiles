@@ -91,7 +91,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -159,12 +159,12 @@ vim.o.inccommand = "split"
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 30
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
-vim.o.confirm = true
+-- vim.o.confirm = false
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -173,7 +173,7 @@ vim.o.confirm = true
 --  See `:help hlsearch`
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-vim.keymap.set("n", "<C-c>", "<cmd>bd<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-c>", "<cmd>BufferClose<CR>", { noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
@@ -285,7 +285,24 @@ require("lazy").setup({
 			},
 		},
 	},
-
+	-- Tabs
+	{
+		"romgrk/barbar.nvim",
+		dependencies = {
+			"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+			"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+		},
+		init = function()
+			vim.g.barbar_auto_setup = true
+		end,
+		opts = {
+			-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+			-- animation = true,
+			-- insert_at_start = true,
+			-- …etc.
+		},
+		version = "^1.0.0", -- optional: only update when a new 1.x version is released
+	},
 	-- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 	--
 	-- This is often very useful to both group configuration, as well as handle
@@ -422,8 +439,6 @@ require("lazy").setup({
 				},
 			})
 
-			require("dapui").setup()
-
 			require("neo-tree").setup({
 				close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 				popup_border_style = "rounded",
@@ -431,18 +446,18 @@ require("lazy").setup({
 				-- If you don't want to use these columns, you can set `enabled = false` for each of them individually
 				file_size = {
 					enabled = true,
-					required_width = 20, -- min width of window required to show this column
+					required_width = 10, -- min width of window required to show this column
 				},
 				type = {
-					enabled = true,
+					enabled = false,
 					required_width = 40, -- min width of window required to show this column
 				},
 				last_modified = {
 					enabled = true,
-					required_width = 88, -- min width of window required to show this column
+					required_width = 15, -- min width of window required to show this column
 				},
 				created = {
-					enabled = true,
+					enabled = false,
 					required_width = 110, -- min width of window required to show this column
 				},
 				symlink_target = {
@@ -450,7 +465,7 @@ require("lazy").setup({
 				},
 				window = {
 					position = "left",
-					width = 60,
+					width = 70,
 				},
 			})
 
@@ -922,11 +937,6 @@ require("lazy").setup({
 			signature = { enabled = true },
 		},
 	},
-	-- Debugger
-	{
-		"rcarriga/nvim-dap-ui",
-		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-	},
 	{ -- You can easily change to a different colorscheme.
 		-- Change the name of the colorscheme plugin below, and then
 		-- change the command in the config to whatever the name of that colorscheme is.
@@ -1003,6 +1013,8 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
+				"cpp",
+				"rust",
 				"diff",
 				"html",
 				"lua",
@@ -1041,7 +1053,7 @@ require("lazy").setup({
 	--  Here are some example plugins that I've included in the Kickstart repository.
 	--  Uncomment any of the lines below to enable them (you will need to restart nvim).
 	--
-	-- require 'kickstart.plugins.debug',
+	require("custom.plugins.debug"),
 	-- require 'kickstart.plugins.indent_line',
 	-- require 'kickstart.plugins.lint',
 	-- require 'kickstart.plugins.autopairs',
